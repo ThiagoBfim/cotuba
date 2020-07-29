@@ -30,24 +30,10 @@ public class RenderizadorMDParaHTML {
                     .forEach(arquivoMD -> {
                         Capitulo capitulo = new Capitulo();
                         Parser parser = Parser.builder().build();
-                        Node document = null;
+                        Node document;
                         try {
                             document = parser.parseReader(Files.newBufferedReader(arquivoMD));
-                            document.accept(new AbstractVisitor() {
-                                @Override
-                                public void visit(Heading heading) {
-                                    if (heading.getLevel() == 1) {
-                                        String tituloDoCapitulo = ((Text) heading.getFirstChild()).getLiteral();
-                                        capitulo.setTitulo(tituloDoCapitulo);
-                                    } else if (heading.getLevel() == 2) {
-                                        // seção
-                                    } else if (heading.getLevel() == 3) {
-                                        // título
-                                    }
-                                }
-
-                            });
-
+                            document.accept(new VisitorHeadingHtml(capitulo));
                             try {
                                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                                 String render = renderer.render(document);
@@ -67,5 +53,26 @@ public class RenderizadorMDParaHTML {
                     "Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(), ex);
         }
         return capitulos;
+    }
+
+    private static class VisitorHeadingHtml extends AbstractVisitor {
+        private final Capitulo capitulo;
+
+        public VisitorHeadingHtml(Capitulo capitulo) {
+            this.capitulo = capitulo;
+        }
+
+        @Override
+        public void visit(Heading heading) {
+            if (heading.getLevel() == 1) {
+                String tituloDoCapitulo = ((Text) heading.getFirstChild()).getLiteral();
+                capitulo.setTitulo(tituloDoCapitulo);
+            } else if (heading.getLevel() == 2) {
+                // seção
+            } else if (heading.getLevel() == 3) {
+                // título
+            }
+        }
+
     }
 }
