@@ -28,11 +28,16 @@ public class Ebook {
         return capitulos;
     }
 
+    public boolean isLastCapitulo(Capitulo capitulo) {
+        return capitulos.get(capitulos.size() -1).equals(capitulo);
+    }
+
+    public boolean isNotLastCapitulo(Capitulo capitulo) {
+        return !isLastCapitulo(capitulo);
+    }
+
     public void setCapitulos(List<Capitulo> capitulos) {
         this.capitulos = capitulos;
     }
 
-    public void generateFile() {
-
-    }
 }

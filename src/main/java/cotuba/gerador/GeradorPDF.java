@@ -1,6 +1,7 @@
 package cotuba.gerador;
 
 import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.html2pdf.jsoup.helper.StringUtil;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -12,6 +13,7 @@ import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
 import cotuba.domain.IGeradorEbook;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -27,17 +29,28 @@ public class GeradorPDF implements IGeradorEbook {
         try (PdfWriter writer = new PdfWriter(Files.newOutputStream(arquivoDeSaida));
              PdfDocument pdf = new PdfDocument(writer);
              Document pdfDocument = new Document(pdf)) {
+
             for (Capitulo capitulo : ebook.getCapitulos()) {
-                String html = capitulo.getConteudoHtml();
-                List<IElement> convertToElements = HtmlConverter.convertToElements(html);
-                for (IElement element : convertToElements) {
-                    pdfDocument.add((IBlockElement) element);
+                generatePdf(pdfDocument, capitulo);
+                if (ebook.isNotLastCapitulo(capitulo)) {
+                    skipPage(pdfDocument);
                 }
-                //	TODO:	não	adicionar	página	depois	do	último	capítulo
-                pdfDocument.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
             }
         } catch (Exception ex) {
             throw new RuntimeException("Erro	ao	criar	arquivo	PDF:	" + ebook.getArquivoSaida().toAbsolutePath(), ex);
+        }
+    }
+
+    private void skipPage(Document pdfDocument) {
+        pdfDocument.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+    }
+
+    private void generatePdf(Document pdfDocument, Capitulo capitulo) throws IOException {
+        String html = capitulo.getConteudoHtml();
+        List<IElement> convertToElements = HtmlConverter.convertToElements(html);
+        for (IElement element : convertToElements) {
+            pdfDocument.add((IBlockElement) element);
         }
     }
 }
