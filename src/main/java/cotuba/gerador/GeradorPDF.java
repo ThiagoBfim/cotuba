@@ -21,7 +21,8 @@ public class GeradorPDF implements IGeradorEbook {
     public GeradorPDF() {
     }
 
-    public void generateFile(Ebook ebook) {
+    @Override
+    public void gerarEbook(Ebook ebook) {
         final Path arquivoDeSaida = ebook.getArquivoSaida();
         try (PdfWriter writer = new PdfWriter(Files.newOutputStream(arquivoDeSaida));
              PdfDocument pdf = new PdfDocument(writer);

@@ -21,7 +21,7 @@ public class RenderizadorMDParaHTML {
 
     private List<Capitulo> capitulos = new ArrayList<>();
 
-    public List<Capitulo> renderHtml(Path diretorioDosMD) {
+    public List<Capitulo> renderizarHtml(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
         try (Stream<Path> arquivosMD = Files.list(diretorioDosMD)) {
             arquivosMD

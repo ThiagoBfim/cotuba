@@ -18,7 +18,7 @@ public class GeradorEPUB implements IGeradorEbook {
     }
 
     @Override
-    public void generateFile(Ebook ebook) {
+    public void gerarEbook(Ebook ebook) {
         final Path arquivoDeSaida = ebook.getArquivoSaida();
         Book epub = new Book();
         for (Capitulo capitulo : ebook.getCapitulos()) {
