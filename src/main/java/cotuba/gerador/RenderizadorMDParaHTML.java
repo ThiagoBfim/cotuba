@@ -27,32 +27,33 @@ public class RenderizadorMDParaHTML {
             arquivosMD
                     .filter(matcher::matches)
                     .sorted()
-                    .forEach(arquivoMD -> {
-                        Capitulo capitulo = new Capitulo();
-                        Parser parser = Parser.builder().build();
-                        Node document;
-                        try {
-                            document = parser.parseReader(Files.newBufferedReader(arquivoMD));
-                            document.accept(new VisitorHeadingHtml(capitulo));
-                            try {
-                                HtmlRenderer renderer = HtmlRenderer.builder().build();
-                                String render = renderer.render(document);
-                                capitulo.setConteudoHtml(render);
-                                capitulos.add(capitulo);
-                            } catch (Exception ex) {
-                                throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
-                            }
-
-                        } catch (Exception ex) {
-                            throw new RuntimeException("Erro ao fazer parse do arquivo " + arquivoMD, ex);
-                        }
-
-                    });
+                    .forEach(this::criarCapitulo);
         } catch (IOException ex) {
             throw new RuntimeException(
                     "Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(), ex);
         }
         return capitulos;
+    }
+
+    private void criarCapitulo(Path arquivoMD) {
+        Capitulo capitulo = new Capitulo();
+        Parser parser = Parser.builder().build();
+        Node document;
+        try {
+            document = parser.parseReader(Files.newBufferedReader(arquivoMD));
+            document.accept(new VisitorHeadingHtml(capitulo));
+            try {
+                HtmlRenderer renderer = HtmlRenderer.builder().build();
+                String render = renderer.render(document);
+                capitulo.setConteudoHtml(render);
+                capitulos.add(capitulo);
+            } catch (Exception ex) {
+                throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
+            }
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Erro ao fazer parse do arquivo " + arquivoMD, ex);
+        }
     }
 
     private static class VisitorHeadingHtml extends AbstractVisitor {

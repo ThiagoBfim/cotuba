@@ -12,10 +12,10 @@ public class LeitorOpcoesCLI {
 
     public LeitorOpcoesCLI(String... args) {
         this.args = args;
-        invoke();
+        initialize();
     }
 
-    private void invoke() {
+    private void initialize() {
         Options options = new Options();
 
         Option opcaoDeDiretorioDosMD = new Option("d", "dir", true,
