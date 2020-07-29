@@ -1,8 +1,8 @@
 package cotuba.gerador;
 
+import cotuba.application.GeradorEbook;
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
-import cotuba.domain.IGeradorEbook;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubWriter;
@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class GeradorEPUB implements IGeradorEbook {
-
-    public GeradorEPUB() {
-    }
+public class GeradorEPUB implements GeradorEbook {
 
     @Override
     public void gerarEbook(Ebook ebook) {

@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class Ebook {
+
     private String formato;
     private Path arquivoSaida;
     private List<Capitulo> capitulos;
@@ -29,7 +30,7 @@ public class Ebook {
     }
 
     public boolean isLastCapitulo(Capitulo capitulo) {
-        return capitulos.get(capitulos.size() -1).equals(capitulo);
+        return capitulos.get(capitulos.size() - 1).equals(capitulo);
     }
 
     public boolean isNotLastCapitulo(Capitulo capitulo) {

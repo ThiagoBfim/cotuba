@@ -1,5 +1,6 @@
-package cotuba.gerador;
+package cotuba.renderizador;
 
+import cotuba.application.Renderizador;
 import cotuba.domain.Capitulo;
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Heading;
@@ -17,10 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class RenderizadorMDParaHTML {
+public class RenderizadorMDParaHTML implements Renderizador {
 
     private List<Capitulo> capitulos = new ArrayList<>();
 
+    @Override
     public List<Capitulo> renderizarHtml(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
         try (Stream<Path> arquivosMD = Files.list(diretorioDosMD)) {
