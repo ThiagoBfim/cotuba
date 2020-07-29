@@ -1,17 +1,18 @@
 package cotuba.application;
 
+import cotuba.domain.Formato;
 import cotuba.gerador.GeradorEPUB;
 import cotuba.gerador.GeradorPDF;
 
 public class GeradorEbookFactory {
 
-    public static GeradorEbook fabricar(String type) {
-        if ("pdf".equals(type)) {
+    public static GeradorEbook fabricar(Formato formato) {
+        if (formato == Formato.PDF) {
             return new GeradorPDF();
-        } else if ("epub".equals(type)) {
+        } else if (formato == Formato.EPUB) {
             return new GeradorEPUB();
         } else {
-            throw new RuntimeException("Formato do ebook inválido: " + type);
+            throw new RuntimeException("Formato do ebook inválido: " + formato.name());
         }
     }
 }

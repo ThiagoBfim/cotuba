@@ -1,6 +1,7 @@
 package cotuba.cli;
 
 import cotuba.application.ParametrosExternos;
+import cotuba.domain.Formato;
 import org.apache.commons.cli.*;
 
 import java.nio.file.Files;
@@ -64,6 +65,15 @@ public class LeitorOpcoesCLI implements ParametrosExternos {
     }
 
     @Override
+    public Formato getFormatoEbook() {
+        String nomeDoFormatoDoEbook = getFormat();
+        if (nomeDoFormatoDoEbook != null) {
+            return Formato.valueOf(nomeDoFormatoDoEbook.toUpperCase());
+        } else {
+            return Formato.valueOf("pdf".toUpperCase());
+        }
+    }
+
     public String getNomeFormatEbook() {
         String nomeDoFormatoDoEbook = getFormat();
         if (nomeDoFormatoDoEbook != null) {
