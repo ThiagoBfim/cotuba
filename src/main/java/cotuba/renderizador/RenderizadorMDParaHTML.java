@@ -14,30 +14,28 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RenderizadorMDParaHTML implements Renderizador {
-
-    private List<Capitulo> capitulos = new ArrayList<>();
 
     @Override
     public List<Capitulo> renderizarHtml(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
         try (Stream<Path> arquivosMD = Files.list(diretorioDosMD)) {
-            arquivosMD
+            return arquivosMD
                     .filter(matcher::matches)
                     .sorted()
-                    .forEach(this::criarCapitulo);
+                    .map(this::criarCapitulo)
+                    .collect(Collectors.toList());
         } catch (IOException ex) {
             throw new RuntimeException(
                     "Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(), ex);
         }
-        return capitulos;
     }
 
-    private void criarCapitulo(Path arquivoMD) {
+    private Capitulo criarCapitulo(Path arquivoMD) {
         Capitulo capitulo = new Capitulo();
         Parser parser = Parser.builder().build();
         Node document;
@@ -48,7 +46,7 @@ public class RenderizadorMDParaHTML implements Renderizador {
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 String render = renderer.render(document);
                 capitulo.setConteudoHtml(render);
-                capitulos.add(capitulo);
+                return capitulo;
             } catch (Exception ex) {
                 throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
             }
