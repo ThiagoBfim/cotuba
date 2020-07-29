@@ -1,6 +1,5 @@
 package cotuba.application;
 
-import cotuba.cli.LeitorOpcoesCLI;
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
 import cotuba.gerador.GeradorEPUB;
@@ -12,10 +11,10 @@ import java.util.List;
 
 public class Cotuba {
 
-    public void executa(LeitorOpcoesCLI leitorOpcoesCLI) {
-        final Path diretorioDosMD = leitorOpcoesCLI.getDiretorioDosMD();
-        final String formato = leitorOpcoesCLI.getNomeFormatEbook();
-        final Path arquivoDeSaida = leitorOpcoesCLI.getArquivoDeSaida();
+    public void executa(ParametrosExternos parametrosExternos) {
+        final Path diretorioDosMD = parametrosExternos.getDiretorioDosMD();
+        final String formato = parametrosExternos.getNomeFormatEbook();
+        final Path arquivoDeSaida = parametrosExternos.getArquivoDeSaida();
 
         RenderizadorMDParaHTML renderizador = new RenderizadorMDParaHTML();
         List<Capitulo> capitulos = renderizador.renderizarHtml(diretorioDosMD);

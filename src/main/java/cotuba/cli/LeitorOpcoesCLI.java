@@ -1,12 +1,13 @@
 package cotuba.cli;
 
+import cotuba.application.ParametrosExternos;
 import org.apache.commons.cli.*;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class LeitorOpcoesCLI {
+public class LeitorOpcoesCLI implements ParametrosExternos {
     private String[] args;
     private CommandLine cmd;
 
@@ -46,7 +47,7 @@ public class LeitorOpcoesCLI {
         }
     }
 
-
+    @Override
     public Path getDiretorioDosMD() {
         Path diretorioDosMD;
         String nomeDoDiretorioDosMD = getNomeDiretorioMD();
@@ -62,6 +63,7 @@ public class LeitorOpcoesCLI {
 
     }
 
+    @Override
     public String getNomeFormatEbook() {
         String nomeDoFormatoDoEbook = getFormat();
         if (nomeDoFormatoDoEbook != null) {
@@ -71,6 +73,7 @@ public class LeitorOpcoesCLI {
         }
     }
 
+    @Override
     public Path getArquivoDeSaida() {
         Path arquivoDeSaida;
         String nomeDoArquivoDeSaidaDoEbook = getNomeArquivoSaida();
@@ -86,6 +89,7 @@ public class LeitorOpcoesCLI {
 
     }
 
+    @Override
     public boolean isVerboso() {
         return cmd.hasOption("verbose");
     }
@@ -98,7 +102,7 @@ public class LeitorOpcoesCLI {
         return cmd.getOptionValue("dir");
     }
 
-    public String getNomeArquivoSaida() {
+    private String getNomeArquivoSaida() {
         return cmd.getOptionValue("output");
     }
 
