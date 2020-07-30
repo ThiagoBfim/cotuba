@@ -6,8 +6,8 @@ import cotuba.gerador.GeradorPDF;
 
 public enum Formato {
 
-    PDF(new GeradorEPUB()),
-    EPUB(new GeradorPDF());
+    PDF(new GeradorPDF()),
+    EPUB(new GeradorEPUB());
 
     private GeradorEbook geradorEbook;
 

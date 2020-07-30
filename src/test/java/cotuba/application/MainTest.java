@@ -2,8 +2,15 @@ package cotuba.application;
 
 
 import cotuba.cli.LeitorOpcoesCLI;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainTest {
 
@@ -22,9 +29,24 @@ public class MainTest {
     }
 
     @Test
-    public void testGeracaoPDF() {
+    public void testGeracaoPDF() throws IOException {
         LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI("-d", pathWithMdFiles);
         new Cotuba().executa(leitorOpcoesCLI);
+
+        String projectPath = System.getProperty("user.dir");
+        File file = new File(projectPath + "\\book.pdf");
+        String st = readPdf(file);
+        Assert.assertFalse(st.isEmpty());
     }
+
+    private String readPdf(File file) throws IOException {
+        PDDocument document = null;
+        document = PDDocument.load(file);
+        PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+        stripper.setSortByPosition(true);
+        PDFTextStripper Tstripper = new PDFTextStripper();
+        return Tstripper.getText(document);
+    }
+
 
 }
