@@ -2,6 +2,7 @@ package cotuba.renderizador;
 
 import cotuba.application.Renderizador;
 import cotuba.domain.Capitulo;
+import cotuba.tema.AplicadorTema;
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Heading;
 import org.commonmark.node.Node;
@@ -46,6 +47,8 @@ public class RenderizadorMDParaHTML implements Renderizador {
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 String render = renderer.render(document);
                 capitulo.setConteudoHtml(render);
+                AplicadorTema tema = new AplicadorTema();
+                tema.aplica(capitulo);
                 return capitulo;
             } catch (Exception ex) {
                 throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
