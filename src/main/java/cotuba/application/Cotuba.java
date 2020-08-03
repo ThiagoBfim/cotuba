@@ -3,7 +3,7 @@ package cotuba.application;
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
 import cotuba.domain.Formato;
-import cotuba.plugin.Plugin;
+import cotuba.plugin.AoFinalizarGeracao;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Cotuba {
         GeradorEbookFactory
                 .fabricar(formato)
                 .gerarEbook(ebook);
-        Plugin.gerou(ebook);
+        AoFinalizarGeracao.gerou(ebook);
 
         System.out.println("Arquivo gerado com sucesso: " + arquivoDeSaida);
 
