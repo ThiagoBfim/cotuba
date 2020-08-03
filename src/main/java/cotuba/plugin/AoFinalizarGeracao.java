@@ -8,7 +8,6 @@ public interface AoFinalizarGeracao {
 
     static void gerou(Ebook ebook) {
         for (AoFinalizarGeracao plugin : AoFinalizarGeracaoLoaderInstance.getInstance()) {
-            System.out.println(plugin.getClass());
             plugin.aposGeracao(ebook);
         }
     }

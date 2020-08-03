@@ -3,7 +3,7 @@ package cotuba.domain;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Ebook {
+public class Ebook implements cotuba.plugin.Ebook {
 
     private Formato formato;
     private Path arquivoSaida;
@@ -29,16 +29,16 @@ public class Ebook {
         return capitulos;
     }
 
+    public void setCapitulos(List<Capitulo> capitulos) {
+        this.capitulos = capitulos;
+    }
+
     public boolean isLastCapitulo(Capitulo capitulo) {
         return capitulos.get(capitulos.size() - 1).equals(capitulo);
     }
 
     public boolean isNotLastCapitulo(Capitulo capitulo) {
         return !isLastCapitulo(capitulo);
-    }
-
-    public void setCapitulos(List<Capitulo> capitulos) {
-        this.capitulos = capitulos;
     }
 
 }

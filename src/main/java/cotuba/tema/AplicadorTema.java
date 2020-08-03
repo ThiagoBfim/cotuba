@@ -10,10 +10,10 @@ import java.util.List;
 public class AplicadorTema {
 
     public void aplica(Capitulo capitulo) {
-        String	html	=	capitulo.getConteudoHtml();
-        Document document	=	Jsoup.parse(html);
-        List<String> listaDeTemas	=	Tema.listaDeTemas();
-        for	(String	css	:	listaDeTemas) {
+        String html = capitulo.getConteudoHtml();
+        Document document = Jsoup.parse(html);
+        List<String> listaDeTemas = Tema.listaDeTemas();
+        for (String css : listaDeTemas) {
             document.select("head").append("<style>	" + css + "	</style>");
         }
         capitulo.setConteudoHtml(document.html());
