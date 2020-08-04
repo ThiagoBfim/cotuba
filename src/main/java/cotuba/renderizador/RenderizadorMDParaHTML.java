@@ -47,13 +47,12 @@ public class RenderizadorMDParaHTML implements Renderizador {
             try {
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 String render = renderer.render(document);
-                Capitulo capitulo = new CapituloBuilder()
-                        .setConteudoHtml(render)
-                        .setTitulo(visitorHeadingHtml.getTitulo())
-                        .build();
+                CapituloBuilder capituloBuilder = new CapituloBuilder()
+                        .setTitulo(visitorHeadingHtml.getTitulo());
                 AplicadorTema tema = new AplicadorTema();
-                tema.aplica(capitulo);
-                return capitulo;
+                String html = tema.aplica(render);
+                return capituloBuilder.setConteudoHtml(html)
+                        .build();
             } catch (Exception ex) {
                 throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
             }
