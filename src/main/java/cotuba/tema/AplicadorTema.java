@@ -16,6 +16,5 @@ public class AplicadorTema {
         for (String css : listaDeTemas) {
             document.select("head").append("<style>	" + css + "	</style>");
         }
-        capitulo.setConteudoHtml(document.html());
     }
 }

@@ -37,16 +37,16 @@ public class RenderizadorMDParaHTML implements Renderizador {
     }
 
     private Capitulo criarCapitulo(Path arquivoMD) {
-        Capitulo capitulo = new Capitulo();
         Parser parser = Parser.builder().build();
         Node document;
         try {
             document = parser.parseReader(Files.newBufferedReader(arquivoMD));
-            document.accept(new VisitorHeadingHtml(capitulo));
+            VisitorHeadingHtml visitorHeadingHtml = new VisitorHeadingHtml();
+            document.accept(visitorHeadingHtml);
             try {
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 String render = renderer.render(document);
-                capitulo.setConteudoHtml(render);
+                final Capitulo capitulo = new Capitulo(render, visitorHeadingHtml.getTitulo());
                 AplicadorTema tema = new AplicadorTema();
                 tema.aplica(capitulo);
                 return capitulo;
@@ -59,18 +59,17 @@ public class RenderizadorMDParaHTML implements Renderizador {
         }
     }
 
-    private static class VisitorHeadingHtml extends AbstractVisitor {
-        private final Capitulo capitulo;
 
-        public VisitorHeadingHtml(Capitulo capitulo) {
-            this.capitulo = capitulo;
+    private static class VisitorHeadingHtml extends AbstractVisitor {
+        private String titulo;
+
+        public VisitorHeadingHtml() {
         }
 
         @Override
         public void visit(Heading heading) {
             if (heading.getLevel() == 1) {
-                String tituloDoCapitulo = ((Text) heading.getFirstChild()).getLiteral();
-                capitulo.setTitulo(tituloDoCapitulo);
+                titulo = ((Text) heading.getFirstChild()).getLiteral();
             } else if (heading.getLevel() == 2) {
                 // seção
             } else if (heading.getLevel() == 3) {
@@ -78,5 +77,8 @@ public class RenderizadorMDParaHTML implements Renderizador {
             }
         }
 
+        public String getTitulo() {
+            return titulo;
+        }
     }
 }
