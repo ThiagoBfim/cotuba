@@ -1,8 +1,8 @@
 package cotuba.cli;
 
-import cotuba.application.ImpressaoPosGeracao;
+import cotuba.application.AcaoPosGeracao;
 
-public class ImprimeNoConsole implements ImpressaoPosGeracao {
+public class ImprimeNoConsole implements AcaoPosGeracao {
 
     @Override
     public void imprimir(String mensagem) {

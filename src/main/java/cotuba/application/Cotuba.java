@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Cotuba {
 
-    public void executa(ParametrosExternos parametrosExternos, ImpressaoPosGeracao impressaoPosGeracao) {
+    public void executa(ParametrosExternos parametrosExternos, AcaoPosGeracao acaoPosGeracao) {
         final Path diretorioDosMD = parametrosExternos.getDiretorioDosMD();
         final Formato formato = parametrosExternos.getFormatoEbook();
         final Path arquivoDeSaida = parametrosExternos.getArquivoDeSaida();
@@ -27,7 +27,7 @@ public class Cotuba {
         GeradorEbookFactory
                 .fabricar(formato)
                 .gerarEbook(ebook);
-        AoFinalizarGeracao.gerou(ebook, impressaoPosGeracao);
+        AoFinalizarGeracao.gerou(ebook, acaoPosGeracao);
 
         System.out.println("Arquivo gerado com sucesso: " + arquivoDeSaida);
 
