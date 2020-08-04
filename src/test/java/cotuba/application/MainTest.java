@@ -1,6 +1,7 @@
 package cotuba.application;
 
 
+import cotuba.cli.ImprimeNoConsole;
 import cotuba.cli.LeitorOpcoesCLI;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -25,13 +26,13 @@ public class MainTest {
     @Test
     public void testGeracaoEpub() {
         LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI("-d", pathWithMdFiles, "-f", "epub");
-        new Cotuba().executa(leitorOpcoesCLI);
+        new Cotuba().executa(leitorOpcoesCLI, new ImprimeNoConsole());
     }
 
     @Test
     public void testGeracaoPDF() throws IOException {
         LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI("-d", pathWithMdFiles);
-        new Cotuba().executa(leitorOpcoesCLI);
+        new Cotuba().executa(leitorOpcoesCLI, new ImprimeNoConsole());
 
         String projectPath = System.getProperty("user.dir");
         File file = new File(projectPath + "\\book.pdf");

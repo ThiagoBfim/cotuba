@@ -8,7 +8,7 @@ public class Main {
         LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI(args);
         try {
             Cotuba cotuba = new Cotuba();
-            cotuba.executa(leitorOpcoesCLI);
+            cotuba.executa(leitorOpcoesCLI, new	ImprimeNoConsole());
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             if (leitorOpcoesCLI.isVerboso()) {
