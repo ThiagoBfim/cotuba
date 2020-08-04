@@ -2,6 +2,7 @@ package cotuba.application;
 
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
+import cotuba.domain.EbookBuilder;
 import cotuba.domain.Formato;
 import cotuba.plugin.AoFinalizarGeracao;
 
@@ -17,7 +18,11 @@ public class Cotuba {
 
         List<Capitulo> capitulos = RenderizadorFactory.fabricar()
                 .renderizarHtml(diretorioDosMD);
-        Ebook ebook = new Ebook(formato, arquivoDeSaida, capitulos);
+        Ebook ebook = new EbookBuilder()
+                .setFormato(formato)
+                .setArquivoSaida(arquivoDeSaida)
+                .setCapitulos(capitulos)
+                .build();
 
         GeradorEbookFactory
                 .fabricar(formato)
