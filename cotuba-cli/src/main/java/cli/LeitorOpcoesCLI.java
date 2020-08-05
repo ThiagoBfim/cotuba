@@ -1,4 +1,4 @@
-package cotuba.cli;
+package cli;
 
 import cotuba.application.ParametrosExternos;
 import cotuba.domain.Formato;

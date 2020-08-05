@@ -1,8 +1,8 @@
 package cotuba.application;
 
 
-import cotuba.cli.ImprimeNoConsole;
-import cotuba.cli.LeitorOpcoesCLI;
+import cli.ImprimeNoConsole;
+import cli.LeitorOpcoesCLI;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
@@ -20,7 +20,7 @@ public class MainTest {
     @Before
     public void setUp() {
         String projectPath = System.getProperty("user.dir");
-        pathWithMdFiles = projectPath + "\\exemplo";
+        pathWithMdFiles = projectPath.replaceAll("cotuba-cli", "") + "exemplo";
     }
 
     @Test
