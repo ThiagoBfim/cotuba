@@ -9,6 +9,6 @@ public interface ParametrosExternos {
 
     Path getArquivoDeSaida();
 
-    boolean isVerboso();
+    RepositorioDeMDs repositorioDeMD();
 
 }

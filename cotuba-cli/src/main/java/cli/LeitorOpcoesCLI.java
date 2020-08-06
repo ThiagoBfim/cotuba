@@ -1,6 +1,7 @@
 package cli;
 
 import cotuba.application.ParametrosExternos;
+import cotuba.application.RepositorioDeMDs;
 import cotuba.domain.Formato;
 import org.apache.commons.cli.*;
 
@@ -80,6 +81,10 @@ public class LeitorOpcoesCLI implements ParametrosExternos {
     }
 
     @Override
+    public RepositorioDeMDs repositorioDeMD() {
+        return new MDsDoDiretorio(getArquivoDeSaida());
+    }
+
     public boolean isVerboso() {
         return cmd.hasOption("verbose");
     }

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class SpringFileUtils {
+public class CotubaFileUtils {
 
     public static ResponseEntity<ByteArrayResource> montaResponseOArquivo(Path path, String type) {
         try {
@@ -21,6 +21,18 @@ public class SpringFileUtils {
             return ResponseEntity.ok().headers(headers).contentLength(data.length).body(resource);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public static void clearTempFiles(Path filePath) {
+        if (filePath != null) {
+            try {
+                Files.deleteIfExists(filePath);
+                Path directory = filePath.getParent();
+                Files.deleteIfExists(directory);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ package cotuba.web.controller;
 
 import cotuba.domain.Formato;
 import cotuba.web.application.GeracaoDeLivros;
-import cotuba.web.utils.SpringFileUtils;
+import cotuba.web.utils.CotubaFileUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,16 +23,16 @@ public class GeracaoDeLivrosController {
     @GetMapping("/livros/{id}/pdf")
     public ResponseEntity<ByteArrayResource> geraPDF(@PathVariable("id") Long id) {
         Path pdf = geracao.geraLivro(id, Formato.PDF);
-        ResponseEntity<ByteArrayResource> pdfResource = SpringFileUtils.montaResponseOArquivo(pdf, "application/pdf");
-        geracao.clearTempFiles();
+        ResponseEntity<ByteArrayResource> pdfResource = CotubaFileUtils.montaResponseOArquivo(pdf, "application/pdf");
+        CotubaFileUtils.clearTempFiles(pdf);
         return pdfResource;
     }
 
     @GetMapping("/livros/{id}/epub")
     public ResponseEntity<ByteArrayResource> geraEPUB(@PathVariable("id") Long id) {
         Path epub = geracao.geraLivro(id, Formato.EPUB);
-        ResponseEntity<ByteArrayResource> epubResource = SpringFileUtils.montaResponseOArquivo(epub, "application/epub+zip");
-        geracao.clearTempFiles();
+        ResponseEntity<ByteArrayResource> epubResource = CotubaFileUtils.montaResponseOArquivo(epub, "application/epub+zip");
+        CotubaFileUtils.clearTempFiles(epub);
         return epubResource;
     }
 

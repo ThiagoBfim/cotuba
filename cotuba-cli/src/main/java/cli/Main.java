@@ -1,7 +1,6 @@
 package cli;
 
 import cotuba.application.Cotuba;
-import cotuba.application.RepositorioDeMDs;
 
 public class Main {
 
@@ -9,8 +8,7 @@ public class Main {
         LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI(args);
         try {
             Cotuba cotuba = new Cotuba();
-            RepositorioDeMDs repositorio = new MDsDoDiretorio(leitorOpcoesCLI.getArquivoDeSaida());
-            cotuba.executa(leitorOpcoesCLI, new ImprimeNoConsole(), repositorio);
+            cotuba.executa(leitorOpcoesCLI, new ImprimeNoConsole());
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             if (leitorOpcoesCLI.isVerboso()) {

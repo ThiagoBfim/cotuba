@@ -2,6 +2,7 @@ package cotuba.web.application;
 
 import cotuba.application.Cotuba;
 import cotuba.application.ParametrosExternos;
+import cotuba.application.RepositorioDeMDs;
 import cotuba.domain.Formato;
 import cotuba.web.domain.Livro;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,6 @@ import java.nio.file.Path;
 public class GeracaoDeLivros {
 
     private final CadastroDeLivros livros;
-    private ParametrosCotubaWeb parametros;
 
     public GeracaoDeLivros(CadastroDeLivros livros) {
         this.livros = livros;
@@ -22,30 +22,20 @@ public class GeracaoDeLivros {
 
     public Path geraLivro(Long id, Formato formato) {
         Livro livro = livros.detalha(id);
-        parametros = new ParametrosCotubaWeb(formato);
-        MDsDoBancoDeDados repositorioDeMD = new MDsDoBancoDeDados(livro);
-        new Cotuba().executa(parametros, System.out::println, repositorioDeMD);
+        ParametrosExternos parametros = new ParametrosWeb(formato, livro);
+        new Cotuba().executa(parametros, System.out::println);
         return parametros.getArquivoDeSaida();
     }
 
-    public void clearTempFiles() {
-        if (parametros != null) {
-            try {
-                Files.deleteIfExists(parametros.getArquivoDeSaida());
-                Files.deleteIfExists(parametros.getDiretorio());
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    private static class ParametrosCotubaWeb implements ParametrosExternos {
+    private static class ParametrosWeb implements ParametrosExternos {
+        private final Livro livro;
+        private final Formato formato;
         private Path arquivoDeSaida;
         private Path diretorio;
-        private Formato formato;
 
-        private ParametrosCotubaWeb(Formato formato) {
+        private ParametrosWeb(Formato formato, Livro livro) {
             this.formato = formato;
+            this.livro = livro;
         }
 
         @Override
@@ -69,8 +59,8 @@ public class GeracaoDeLivros {
         }
 
         @Override
-        public boolean isVerboso() {
-            return false;
+        public RepositorioDeMDs repositorioDeMD() {
+            return new MDsDoBancoDeDados(livro);
         }
 
         public Path getDiretorio() {
