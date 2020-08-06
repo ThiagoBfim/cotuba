@@ -11,6 +11,7 @@ import com.itextpdf.layout.property.AreaBreakType;
 import cotuba.application.GeradorEbook;
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
+import cotuba.domain.Formato;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +19,11 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class GeradorPDF implements GeradorEbook {
+
+    @Override
+    public Formato formato() {
+        return Formato.PDF;
+    }
 
     @Override
     public void gerarEbook(Ebook ebook) {

@@ -10,26 +10,31 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>cotuba-cli</artifactId>
+    <artifactId>cotuba-epub</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
+            <groupId>nl.siegmann.epublib</groupId>
+            <artifactId>epublib-core</artifactId>
+            <version>3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.kxml</groupId>
+                    <artifactId>kxml2</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xmlpull</groupId>
+                    <artifactId>xmlpull</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>cotuba</groupId>
             <artifactId>cotuba-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cotuba</groupId>
-            <artifactId>cotuba-pdf</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cotuba</groupId>
-            <artifactId>cotuba-epub</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-
-
+    
 </project>

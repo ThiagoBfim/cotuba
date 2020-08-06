@@ -24,8 +24,8 @@ public class Cotuba {
                 .setCapitulos(capitulos)
                 .build();
 
-        GeradorEbookFactory
-                .fabricar(formato)
+        GeradorEbook
+                .cria(formato)
                 .gerarEbook(ebook);
         AoFinalizarGeracao.gerou(ebook, acaoPosGeracao);
 
