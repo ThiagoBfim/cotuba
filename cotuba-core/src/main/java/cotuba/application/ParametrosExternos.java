@@ -11,5 +11,4 @@ public interface ParametrosExternos {
 
     boolean isVerboso();
 
-    Path getDiretorioDosMD();
 }

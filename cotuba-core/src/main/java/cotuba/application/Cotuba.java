@@ -11,13 +11,12 @@ import java.util.List;
 
 public class Cotuba {
 
-    public void executa(ParametrosExternos parametrosExternos, AcaoPosGeracao acaoPosGeracao) {
-        final Path diretorioDosMD = parametrosExternos.getDiretorioDosMD();
+    public void executa(ParametrosExternos parametrosExternos, AcaoPosGeracao acaoPosGeracao, RepositorioDeMDs repositorioDeMD) {
         final Formato formato = parametrosExternos.getFormatoEbook();
         final Path arquivoDeSaida = parametrosExternos.getArquivoDeSaida();
 
         List<Capitulo> capitulos = RenderizadorFactory.fabricar()
-                .renderizarHtml(diretorioDosMD);
+                .renderizarHtml(repositorioDeMD);
         Ebook ebook = new EbookBuilder()
                 .setFormato(formato)
                 .setArquivoSaida(arquivoDeSaida)

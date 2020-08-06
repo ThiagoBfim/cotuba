@@ -1,12 +1,15 @@
 package cotuba.application;
 
 import cotuba.domain.Capitulo;
+import cotuba.renderizador.RenderizadorMDParaHTML;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public interface Renderizador {
 
-    List<Capitulo> renderizarHtml(Path diretorioDosMD);
+    List<Capitulo> renderizarHtml(RepositorioDeMDs repositorioDeMDs);
 
+    static Renderizador cria() {
+        return new RenderizadorMDParaHTML();
+    }
 }

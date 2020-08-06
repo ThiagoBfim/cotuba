@@ -1,6 +1,7 @@
 package cotuba.renderizador;
 
 import cotuba.application.Renderizador;
+import cotuba.application.RepositorioDeMDs;
 import cotuba.domain.Capitulo;
 import cotuba.domain.CapituloBuilder;
 import cotuba.tema.AplicadorTema;
@@ -11,37 +12,26 @@ import org.commonmark.node.Text;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class RenderizadorMDParaHTML implements Renderizador {
 
     @Override
-    public List<Capitulo> renderizarHtml(Path diretorioDosMD) {
-        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
-        try (Stream<Path> arquivosMD = Files.list(diretorioDosMD)) {
-            return arquivosMD
-                    .filter(matcher::matches)
-                    .sorted()
-                    .map(this::criarCapitulo)
-                    .collect(Collectors.toList());
-        } catch (IOException ex) {
-            throw new RuntimeException(
-                    "Erro tentando encontrar arquivos .md em " + diretorioDosMD.toAbsolutePath(), ex);
-        }
+    public List<Capitulo> renderizarHtml(RepositorioDeMDs repositorioDeMDs) {
+        return repositorioDeMDs
+                .obtemMDsDosCapitulos()
+                .stream()
+                .sorted()
+                .map(this::criarCapitulo)
+                .collect(Collectors.toList());
     }
 
-    private Capitulo criarCapitulo(Path arquivoMD) {
+    private Capitulo criarCapitulo(String md) {
         Parser parser = Parser.builder().build();
         Node document;
         try {
-            document = parser.parseReader(Files.newBufferedReader(arquivoMD));
+            document = parser.parse(md);
             VisitorHeadingHtml visitorHeadingHtml = new VisitorHeadingHtml();
             document.accept(visitorHeadingHtml);
             try {
@@ -54,11 +44,11 @@ public class RenderizadorMDParaHTML implements Renderizador {
                 return capituloBuilder.setConteudoHtml(html)
                         .build();
             } catch (Exception ex) {
-                throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
+                throw new RuntimeException("Erro	ao	fazer	parse	de	markdown	", ex);
             }
 
         } catch (Exception ex) {
-            throw new RuntimeException("Erro ao fazer parse do arquivo " + arquivoMD, ex);
+            throw new RuntimeException("Erro	ao	renderizar	MD	para	HTML", ex);
         }
     }
 
