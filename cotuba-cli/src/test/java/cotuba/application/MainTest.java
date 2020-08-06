@@ -3,7 +3,6 @@ package cotuba.application;
 
 import cli.ImprimeNoConsole;
 import cli.LeitorOpcoesCLI;
-import cli.MDsDoDiretorio;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
@@ -13,29 +12,27 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 public class MainTest {
 
-    private MDsDoDiretorio mDsDoDiretorio;
+    private String pathWithMdFiles;
 
     @Before
     public void setUp() {
         String projectPath = System.getProperty("user.dir");
-        String pathWithMdFiles = projectPath.replaceAll("cotuba-cli", "") + "exemplo";
-        mDsDoDiretorio = new MDsDoDiretorio(Paths.get(pathWithMdFiles));
+        pathWithMdFiles = projectPath.replaceAll("cotuba-cli", "") + "exemplo";
     }
 
     @Test
     public void testGeracaoEpub() {
-        LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI("-f", "epub");
-        new Cotuba().executa(leitorOpcoesCLI, new ImprimeNoConsole(), mDsDoDiretorio);
+        LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI("-d", pathWithMdFiles, "-f", "epub");
+        new Cotuba().executa(leitorOpcoesCLI, new ImprimeNoConsole());
     }
 
     @Test
     public void testGeracaoPDF() throws IOException {
-        LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI();
-        new Cotuba().executa(leitorOpcoesCLI, new ImprimeNoConsole(), mDsDoDiretorio);
+        LeitorOpcoesCLI leitorOpcoesCLI = new LeitorOpcoesCLI("-d", pathWithMdFiles);
+        new Cotuba().executa(leitorOpcoesCLI, new ImprimeNoConsole());
 
         String projectPath = System.getProperty("user.dir");
         File file = new File(projectPath + "\\book.pdf");

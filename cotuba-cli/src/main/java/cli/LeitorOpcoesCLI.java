@@ -21,6 +21,10 @@ public class LeitorOpcoesCLI implements ParametrosExternos {
     private void initialize() {
         Options options = new Options();
 
+        Option opcaoDeDiretorioDosMD = new Option("d", "dir", true,
+                "Diretório que contem os arquivos md. Default: diretório atual.");
+        options.addOption(opcaoDeDiretorioDosMD);
+
         Option opcaoDeFormatoDoEbook = new Option("f", "format", true,
                 "Formato de saída do ebook. Pode ser: pdf ou epub. Default: pdf");
         options.addOption(opcaoDeFormatoDoEbook);
@@ -82,7 +86,22 @@ public class LeitorOpcoesCLI implements ParametrosExternos {
 
     @Override
     public RepositorioDeMDs repositorioDeMD() {
-        return new MDsDoDiretorio(getArquivoDeSaida());
+        return new MDsDoDiretorio(getDiretorioDosMD());
+    }
+
+    private Path getDiretorioDosMD() {
+        Path diretorioDosMD;
+        String nomeDoDiretorioDosMD = getNomeDiretorioMD();
+        if (nomeDoDiretorioDosMD != null) {
+            diretorioDosMD = Paths.get(nomeDoDiretorioDosMD);
+            if (!Files.isDirectory(diretorioDosMD)) {
+                throw new RuntimeException(nomeDoDiretorioDosMD + " não é um diretório.");
+            }
+        } else {
+            diretorioDosMD = Paths.get("");
+        }
+        return diretorioDosMD;
+
     }
 
     public boolean isVerboso() {
@@ -91,6 +110,10 @@ public class LeitorOpcoesCLI implements ParametrosExternos {
 
     private String getFormat() {
         return cmd.getOptionValue("format");
+    }
+
+    private String getNomeDiretorioMD() {
+        return cmd.getOptionValue("dir");
     }
 
     private String getNomeArquivoSaida() {
