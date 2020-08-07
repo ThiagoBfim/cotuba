@@ -1,4 +1,4 @@
-package cotuba.gerador;
+package cotuba.epub;
 
 import cotuba.application.GeradorEbook;
 import cotuba.domain.Capitulo;

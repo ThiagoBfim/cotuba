@@ -23,7 +23,7 @@ public class Livro {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setIds(Long id) {
 		this.id = id;
 	}
 
@@ -31,7 +31,7 @@ public class Livro {
 		return titulo;
 	}
 
-	public void setTitulo(String titulo) {
+	public void setTitulos(String titulo) {
 		this.titulo = titulo;
 	}
 

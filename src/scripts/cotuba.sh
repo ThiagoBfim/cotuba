@@ -1,3 +1,3 @@
 #!/bin/bash
-java -cp "libs/*" cli.Main "$@"
+java -cp "libs/*" Main "$@"
 

@@ -1,4 +1,4 @@
-package cotuba.gerador;
+package cotuba.pdf;
 
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.pdf.PdfDocument;

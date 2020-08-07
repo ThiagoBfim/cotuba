@@ -1,8 +1,7 @@
-package cotuba.application;
+package cotuba.cli;
 
 
-import cli.ImprimeNoConsole;
-import cli.LeitorOpcoesCLI;
+import cotuba.application.Cotuba;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;

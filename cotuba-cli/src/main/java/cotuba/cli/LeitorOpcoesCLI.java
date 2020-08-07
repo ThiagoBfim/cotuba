@@ -1,4 +1,4 @@
-package cli;
+package cotuba.cli;
 
 import cotuba.application.ParametrosExternos;
 import cotuba.application.RepositorioDeMDs;
