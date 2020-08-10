@@ -11,6 +11,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cotuba-core" />
+    <orderEntry type="module" module-name="cotuba-pdf" />
+    <orderEntry type="module" module-name="cotuba-epub" />
+    <orderEntry type="module" module-name="cotuba-core" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Maven: com.atlassian.commonmark:commonmark:0.11.0" level="project" />
     <orderEntry type="library" name="Maven: net.sf.kxml:kxml2:jar-with-dependencies:2.5.1-SNAPSHOT" level="project" />
